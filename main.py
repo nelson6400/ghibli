@@ -17,7 +17,8 @@ class MainPageHandler(webapp2.RequestHandler):
 
 class SearchHandler(webapp2.RequestHandler):
     def post(self):
-        base_url = 'https://ghibliapi.herokuapp.com/people' # JUST FOR NOW
+        filter = self.request.get('filter')
+        base_url = 'https://ghibliapi.herokuapp.com/{}'.format(filter) # JUST FOR NOW
         response = json.loads(urlfetch.fetch(base_url).content)
         template = jinja_env.get_template('templates/results.html')
         self.response.write(template.render({ 'response': response }))
